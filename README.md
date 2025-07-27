@@ -1,0 +1,2 @@
+# LegalGuard
+LegalGuard Chrome extension

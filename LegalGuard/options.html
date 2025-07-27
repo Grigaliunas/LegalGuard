@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+   <meta charset="utf-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+   <title>LegalGuard Settings</title>
+   <style>
+      * {
+         margin: 0;
+         padding: 0;
+         box-sizing: border-box;
+      }
+
+      body {
+         font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+         background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+         min-height: 100vh;
+         padding: 20px;
+      }
+
+      .container {
+         max-width: 800px;
+         margin: 0 auto;
+         background: rgba(255, 255, 255, 0.95);
+         backdrop-filter: blur(20px);
+         border-radius: 20px;
+         box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+         overflow: hidden;
+      }
+
+      .header {
+         background: linear-gradient(135deg, #2c3e50, #34495e);
+         color: white;
+         padding: 40px;
+         text-align: center;
+      }
+
+      .header h1 {
+         font-size: 32px;
+         font-weight: 700;
+         margin-bottom: 12px;
+      }
+
+      .header p {
+         font-size: 16px;
+         opacity: 0.9;
+         margin-bottom: 8px;
+      }
+
+      .author {
+         font-size: 14px;
+         opacity: 0.7;
+         font-style: italic;
+      }
+
+      .content {
+         padding: 40px;
+      }
+
+      .section {
+         margin-bottom: 40px;
+         padding: 24px;
+         background: rgba(0, 0, 0, 0.02);
+         border-radius: 12px;
+         border: 1px solid rgba(0, 0, 0, 0.1);
+      }
+
+      .section h2 {
+         font-size: 20px;
+         font-weight: 600;
+         color: #2c3e50;
+         margin-bottom: 16px;
+         display: flex;
+         align-items: center;
+         gap: 12px;
+      }
+
+      .section-icon {
+         width: 24px;
+         height: 24px;
+         background: #3498db;
+         border-radius: 6px;
+         display: flex;
+         align-items: center;
+         justify-content: center;
+         color: white;
+         font-size: 14px;
+      }
+
+      .form-group {
+         margin-bottom: 24px;
+      }
+
+      .form-group label {
+         display: block;
+         font-weight: 600;
+         color: #2c3e50;
+         margin-bottom: 8px;
+         font-size: 14px;
+      }
+
+      .form-group input,
+      .form-group textarea,
+      .form-group select {
+         width: 100%;
+         padding: 12px 16px;
+         border: 2px solid rgba(0, 0, 0, 0.1);
+         border-radius: 8px;
+         font-size: 14px;
+         transition: all 0.2s ease;
+         background: white;
+      }
+
+      .form-group input:focus,
+      .form-group textarea:focus,
+      .form-group select:focus {
+         outline: none;
+         border-color: #3498db;
+         box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+      }
+
+      .form-group textarea {
+         resize: vertical;
+         min-height: 100px;
+         font-family: monospace;
+      }
+
+      .form-group .help-text {
+         font-size: 12px;
+         color: #7f8c8d;
+         margin-top: 6px;
+         line-height: 1.4;
+      }
+
+      .checkbox-group {
+         display: flex;
+         align-items: center;
+         gap: 12px;
+         margin-bottom: 16px;
+      }
+
+      .checkbox-group input[type="checkbox"] {
+         width: 20px;
+         height: 20px;
+         accent-color: #3498db;
+      }
+
+      .checkbox-group label {
+         margin-bottom: 0;
+         cursor: pointer;
+      }
+
+      .database-list {
+         border: 2px solid rgba(0, 0, 0, 0.1);
+         border-radius: 8px;
+         overflow: hidden;
+      }
+
+      .database-item {
+         display: flex;
+         align-items: center;
+         padding: 12px 16px;
+         border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+         background: white;
+      }
+
+      .database-item:last-child {
+         border-bottom: none;
+      }
+
+      .database-item input {
+         flex: 1;
+         border: none;
+         padding: 8px;
+         font-size: 14px;
+      }
+
+      .database-item button {
+         padding: 6px 12px;
+         background: #e74c3c;
+         color: white;
+         border: none;
+         border-radius: 4px;
+         cursor: pointer;
+         font-size: 12px;
+         transition: background 0.2s ease;
+      }
+
+      .database-item button:hover {
+         background: #c0392b;
+      }
+
+      .add-database {
+         padding: 12px 16px;
+         background: #ecf0f1;
+         border-top: 1px solid rgba(0, 0, 0, 0.1);
+         display: flex;
+         gap: 8px;
+      }
+
+      .add-database input {
+         flex: 1;
+         border: 1px solid rgba(0, 0, 0, 0.2);
+         border-radius: 4px;
+         padding: 8px 12px;
+         font-size: 14px;
+      }
+
+      .add-database button {
+         padding: 8px 16px;
+         background: #27ae60;
+         color: white;
+         border: none;
+         border-radius: 4px;
+         cursor: pointer;
+         font-size: 14px;
+         transition: background 0.2s ease;
+      }
+
+      .add-database button:hover {
+         background: #229954;
+      }
+
+      .range-group {
+         display: flex;
+         align-items: center;
+         gap: 16px;
+      }
+
+      .range-group input[type="range"] {
+         flex: 1;
+         height: 6px;
+         border-radius: 3px;
+         background: #ecf0f1;
+         outline: none;
+         -webkit-appearance: none;
+      }
+
+      .range-group input[type="range"]::-webkit-slider-thumb {
+         -webkit-appearance: none;
+         width: 20px;
+         height: 20px;
+         border-radius: 50%;
+         background: #3498db;
+         cursor: pointer;
+      }
+
+      .range-group input[type="range"]::-moz-range-thumb {
+         width: 20px;
+         height: 20px;
+         border-radius: 50%;
+         background: #3498db;
+         cursor: pointer;
+         border: none;
+      }
+
+      .range-value {
+         min-width: 60px;
+         text-align: center;
+         font-weight: 600;
+         color: #2c3e50;
+         background: rgba(52, 152, 219, 0.1);
+         padding: 4px 8px;
+         border-radius: 4px;
+         font-size: 14px;
+      }
+
+      .actions {
+         display: flex;
+         gap: 16px;
+         justify-content: flex-end;
+         margin-top: 40px;
+         padding-top: 24px;
+         border-top: 2px solid rgba(0, 0, 0, 0.1);
+      }
+
+      .btn {
+         padding: 14px 24px;
+         border: none;
+         border-radius: 8px;
+         font-size: 16px;
+         font-weight: 600;
+         cursor: pointer;
+         transition: all 0.2s ease;
+         display: flex;
+         align-items: center;
+         gap: 8px;
+      }
+
+      .btn-primary {
+         background: #3498db;
+         color: white;
+      }
+
+      .btn-secondary {
+         background: #95a5a6;
+         color: white;
+      }
+
+      .btn:hover {
+         transform: translateY(-1px);
+         box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      }
+
+      .btn:disabled {
+         opacity: 0.6;
+         cursor: not-allowed;
+         transform: none;
+      }
+
+      .success-message,
+      .error-message {
+         padding: 12px 16px;
+         border-radius: 8px;
+         margin-bottom: 20px;
+         font-weight: 600;
+         text-align: center;
+      }
+
+      .success-message {
+         background: #d5edda;
+         color: #155724;
+         border: 1px solid #c3e6cb;
+      }
+
+      .error-message {
+         background: #f8d7da;
+         color: #721c24;
+         border: 1px solid #f5c6cb;
+      }
+
+      .api-status {
+         display: flex;
+         align-items: center;
+         gap: 8px;
+         margin-top: 8px;
+         font-size: 13px;
+      }
+
+      .status-indicator {
+         width: 12px;
+         height: 12px;
+         border-radius: 50%;
+      }
+
+      .status-indicator.connected {
+         background: #27ae60;
+      }
+
+      .status-indicator.disconnected {
+         background: #e74c3c;
+      }
+
+      .status-indicator.testing {
+         background: #f39c12;
+         animation: pulse 1s infinite;
+      }
+
+      @keyframes pulse {
+         0% {
+            opacity: 1;
+         }
+
+         50% {
+            opacity: 0.5;
+         }
+
+         100% {
+            opacity: 1;
+         }
+      }
+
+      .footer {
+         text-align: center;
+         padding: 24px;
+         background: rgba(0, 0, 0, 0.02);
+         border-top: 1px solid rgba(0, 0, 0, 0.1);
+         color: #7f8c8d;
+         font-size: 14px;
+      }
+   </style>
+</head>
+
+<body>
+   <div class="container">
+      <div class="header">
+         <h1>🛡️ LegalGuard Settings</h1>
+         <p>Configure content legality assessment parameters</p>
+         <div class="author">Extension by Dr. Šarūnas Grigaliūnas</div>
+      </div>
+
+      <div class="content">
+         <div id="messages"></div>
+
+         <!-- Detection Settings -->
+         <div class="section">
+            <h2>
+               <div class="section-icon">🔍</div>
+               Detection Settings
+            </h2>
+
+            <div class="form-group">
+               <div class="checkbox-group">
+                  <input type="checkbox" id="torrentDetection">
+                  <label for="torrentDetection">Enable torrent file detection</label>
+               </div>
+               <div class="help-text">
+                  When enabled, pages containing .torrent files or magnet links will be flagged as illegal content.
+               </div>
+            </div>
+
+            <div class="form-group">
+               <label for="sslCertificateAge">SSL Certificate Age Warning (days)</label>
+               <div class="range-group">
+                  <input type="range" id="sslCertificateAge" min="1" max="365" value="30">
+                  <div class="range-value" id="sslCertificateAgeValue">30</div>
+               </div>
+               <div class="help-text">
+                  Websites with SSL certificates newer than this will show a warning.
+               </div>
+            </div>
+
+            <div class="form-group">
+               <label for="domainRegistrationAge">Domain Registration Age Warning (days)</label>
+               <div class="range-group">
+                  <input type="range" id="domainRegistrationAge" min="1" max="90" value="14">
+                  <div class="range-value" id="domainRegistrationAgeValue">14</div>
+               </div>
+               <div class="help-text">
+                  Domains registered within this timeframe will show a warning.
+               </div>
+            </div>
+         </div>
+
+         <!-- Illegal Content Databases -->
+         <div class="section">
+            <h2>
+               <div class="section-icon">🗄️</div>
+               Illegal Content Databases
+            </h2>
+
+            <div class="form-group">
+               <label>Database URLs</label>
+               <div class="help-text" style="margin-bottom: 12px;">
+                  Add URLs of databases that check for illegal content. Each URL should accept a 'url' parameter.
+               </div>
+
+               <div class="database-list" id="databaseList">
+                  <!-- Database items will be populated here -->
+               </div>
+
+               <div class="add-database">
+                  <input type="url" id="newDatabaseUrl" placeholder="https://api.example.com/check">
+                  <button type="button" id="addDatabaseBtn">Add Database</button>
+               </div>
+            </div>
+         </div>
+
+         <!-- AI Analysis Settings -->
+         <div class="section">
+            <h2>
+               <div class="section-icon">🤖</div>
+               AI Analysis Settings
+            </h2>
+
+            <div class="form-group">
+               <div class="checkbox-group">
+                  <input type="checkbox" id="enableAIAnalysis">
+                  <label for="enableAIAnalysis">Enable AI content analysis</label>
+               </div>
+               <div class="help-text">
+                  Allow AI to analyze page content when manually requested.
+               </div>
+            </div>
+
+            <div class="form-group">
+               <label for="apiKey">OpenAI API Key</label>
+               <input type="password" id="apiKey" placeholder="sk-...">
+               <div class="help-text">
+                  Your OpenAI API key for AI-powered content analysis. This is stored locally and never shared.
+               </div>
+               <div class="api-status" id="apiStatus">
+                  <div class="status-indicator disconnected"></div>
+                  <span>API key not configured</span>
+               </div>
+            </div>
+
+            <button type="button" class="btn btn-secondary" id="testApiBtn">
+               <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                  <path
+                     d="M12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12A10,10 0 0,1 12,2M12,4A8,8 0 0,0 4,12A8,8 0 0,0 12,20A8,8 0 0,0 20,12A8,8 0 0,0 12,4M11,16.5L6.5,12L7.91,10.59L11,13.67L16.59,8.09L18,9.5L11,16.5Z" />
+               </svg>
+               Test API Connection
+            </button>
+         </div>
+
+         <div class="actions">
+            <button type="button" class="btn btn-secondary" id="resetBtn">
+               <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                  <path
+                     d="M17.65,6.35C16.2,4.9 14.21,4 12,4A8,8 0 0,0 4,12A8,8 0 0,0 12,20C15.73,20 18.84,17.45 19.73,14H17.65C16.83,16.33 14.61,18 12,18A6,6 0 0,1 6,12A6,6 0 0,1 12,6C13.66,6 15.14,6.69 16.22,7.78L13,11H20V4L17.65,6.35Z" />
+               </svg>
+               Reset to Defaults
+            </button>
+            <button type="button" class="btn btn-primary" id="saveBtn">
+               <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                  <path
+                     d="M15,9H5V5H15M12,19A3,3 0 0,1 9,16A3,3 0 0,1 12,13A3,3 0 0,1 15,16A3,3 0 0,1 12,19M17,3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V7L17,3Z" />
+               </svg>
+               Save Settings
+            </button>
+         </div>
+      </div>
+
+      <div class="footer">
+         LegalGuard Extension v1.0.0 - Built for content safety and legal compliance
+      </div>
+   </div>
+
+   <script src="options.js"></script>
+</body>
+
+</html>
